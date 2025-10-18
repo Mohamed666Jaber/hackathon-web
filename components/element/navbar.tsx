@@ -22,6 +22,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 interface MenuItem {
   title: string;
@@ -60,6 +61,7 @@ export const Navbar1 = ({
     login: { title: "Login", url: "#" },
   },
 }: Navbar1Props) => {
+    const { data: session } = useSession();
   return (
     <section className="py-4 px-auto">
       <div className="container mx-auto">
@@ -86,9 +88,15 @@ export const Navbar1 = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
-            </Button>
+            {session ? 
+                <Button asChild variant="outline" size="sm" onClick={() => signOut()}>
+                    <a href={auth.login.url}>Sign Out</a>
+                </Button>
+                :
+                <Button asChild variant="outline" size="sm" onClick={() => signIn("42-school")}>
+                    <a href="#">Sign In</a>
+                </Button>
+            }
             {/* <Button asChild size="sm">
               <a href={auth.signup.url}>{auth.signup.title}</a>
             </Button> */}
@@ -134,12 +142,15 @@ export const Navbar1 = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
-                    </Button>
-                    {/* <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button> */}
+                    {session ? 
+                        <Button asChild variant="outline" size="sm" onClick={() => signOut()}>
+                            <a href={auth.login.url}>Sign Out</a>
+                        </Button>
+                        :
+                        <Button asChild variant="outline" size="sm" onClick={() => signIn("42-school")}>
+                            <a href="#">Sign In</a>
+                        </Button>
+            }
                   </div>
                 </div>
               </SheetContent>
