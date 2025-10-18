@@ -89,11 +89,11 @@ export const Navbar1 = ({
           </div>
           <div className="flex gap-2">
             {session ? 
-                <Button asChild variant="outline" size="sm" onClick={() => signOut()}>
+                <Button asChild variant="outline" size="sm" className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-400" onClick={() => signOut()}>
                     <a href={auth.login.url}>Sign Out</a>
                 </Button>
                 :
-                <Button asChild variant="outline" size="sm" onClick={() => signIn("42-school")}>
+                <Button asChild variant="outline" size="sm" className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-400" onClick={() => signIn("42-school")}>
                     <a href="#">Sign In</a>
                 </Button>
             }
@@ -149,11 +149,11 @@ export const Navbar1 = ({
 
                   <div className="flex flex-col gap-3">
                     {session ? 
-                        <Button asChild variant="outline" size="sm" onClick={() => signOut()}>
+                        <Button asChild variant="outline" className="border-emerald-500 text-emerald-400  hover:bg-emerald-800/20 hover:text-emerald-300 hover:border-emerald-400" onClick={() => signOut()}>
                             <a href={auth.login.url}>Sign Out</a>
                         </Button>
                         :
-                        <Button asChild variant="outline" size="sm" onClick={() => signIn("42-school")}>
+                        <Button asChild variant="outline" className="border-emerald-500 text-emerald-400  hover:bg-emerald-800/20 hover:text-emerald-300 hover:border-emerald-400" onClick={() => signIn("42-school")}>
                             <a href="#">Sign In</a>
                         </Button>
             }
