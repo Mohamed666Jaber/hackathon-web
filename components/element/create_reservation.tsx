@@ -46,7 +46,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function CreateReservationForm() {
+export function CreateResevationForm() {
   const intra =
     typeof window !== "undefined"
       ? (window as any).__USER_INTRA__ || "unknown"
@@ -67,7 +67,7 @@ export function CreateReservationForm() {
     const data = form.getValues()
     toast.success("Event created!", {
       description: (
-        <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
+        <pre className="bg-gray-900 text-emerald-400 mt-2 w-[320px] overflow-x-auto rounded-md p-4">
           <code>{JSON.stringify({ ...data, intra }, null, 2)}</code>
         </pre>
       ),
@@ -77,11 +77,11 @@ export function CreateReservationForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
-      <Card className="w-full max-w-md shadow-lg rounded-2xl border border-gray-200">
+    <div className="flex items-center justify-center min-h-screen bg-slate-950 p-4">
+      <Card className="w-full max-w-md shadow-lg rounded-2xl border border-emerald-500 bg-slate-900">
         <CardHeader>
-          <CardTitle className="text-center">Create Event</CardTitle>
-          <CardDescription className="text-center text-gray-600">
+          <CardTitle className="text-center text-2xl text-emerald-300">Create Event</CardTitle>
+          <CardDescription className="text-center text-teal-300 text-lg">
             Fill in the details and add your event.
           </CardDescription>
         </CardHeader>
@@ -93,14 +93,15 @@ export function CreateReservationForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Event Name</FieldLabel>
+                  <FieldLabel className="text-emerald-400 text-lg font-semibold">Event Name</FieldLabel>
                   <Input
                     {...field}
                     placeholder="Example: Coding Workshop"
                     aria-invalid={fieldState.invalid}
+                    className="bg-slate-800 text-white border-emerald-500 placeholder-gray-400 focus:border-emerald-400"
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className="text-red-500" />
                   )}
                 </Field>
               )}
@@ -111,16 +112,17 @@ export function CreateReservationForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Max Spots</FieldLabel>
+                  <FieldLabel className="text-emerald-400 text-lg font-semibold">Max Spots</FieldLabel>
                   <Input
                     type="number"
                     min={1}
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder="e.g. 20"
+                    className="bg-slate-800 text-white border-emerald-500 placeholder-gray-400 focus:border-emerald-400"
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className="text-red-500" />
                   )}
                 </Field>
               )}
@@ -131,14 +133,15 @@ export function CreateReservationForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Event Day</FieldLabel>
+                  <FieldLabel className="text-emerald-400 text-lg font-semibold">Event Day</FieldLabel>
                   <Input
                     type="date"
                     {...field}
                     aria-invalid={fieldState.invalid}
+                    className="bg-slate-800 text-white border-emerald-500 focus:border-emerald-400"
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className="text-red-500" />
                   )}
                 </Field>
               )}
@@ -149,14 +152,15 @@ export function CreateReservationForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Event Hour</FieldLabel>
+                  <FieldLabel className="text-emerald-400 text-lg font-semibold">Event Hour</FieldLabel>
                   <Input
                     type="time"
                     {...field}
                     aria-invalid={fieldState.invalid}
+                    className="bg-slate-800 text-white border-emerald-500 focus:border-emerald-400"
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className="text-red-500" />
                   )}
                 </Field>
               )}
@@ -167,22 +171,23 @@ export function CreateReservationForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Description</FieldLabel>
+                  <FieldLabel className="text-emerald-400 text-lg font-semibold">Description</FieldLabel>
                   <InputGroup>
                     <InputGroupTextarea
                       {...field}
                       placeholder="Describe the event..."
                       rows={4}
+                      className="bg-slate-800 text-white border-emerald-500 focus:border-emerald-400"
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="block-end">
-                      <InputGroupText className="tabular-nums">
+                      <InputGroupText className="tabular-nums text-teal-300">
                         {field.value.length}/100
                       </InputGroupText>
                     </InputGroupAddon>
                   </InputGroup>
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className="text-red-500" />
                   )}
                 </Field>
               )}
@@ -191,7 +196,11 @@ export function CreateReservationForm() {
         </CardContent>
 
         <CardFooter className="flex justify-center">
-          <Button type="button" onClick={handleAddEvent}>
+          <Button
+            type="button"
+            onClick={handleAddEvent}
+            className="bg-emerald-500 hover:bg-emerald-400 text-white text-lg font-semibold"
+          >
             Create Event
           </Button>
         </CardFooter>
