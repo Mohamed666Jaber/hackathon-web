@@ -44,95 +44,20 @@ interface Navbar1Props {
       title: string;
       url: string;
     };
-    signup: {
-      title: string;
-      url: string;
-    };
   };
 }
 
 export const Navbar1 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
+    url: "http://localhost:3000",
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "1337BookingHub",
   },
   menu = [
-    { title: "Home", url: "#" },
-    {
-      title: "Products",
-      url: "#",
-      items: [
-        {
-          title: "Blog",
-          description: "The latest industry news, updates, and info",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Company",
-          description: "Our mission is to innovate and empower the world",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Careers",
-          description: "Browse job listing and discover our workspace",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Support",
-          description:
-            "Get in touch with our support team or visit our community forums",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Resources",
-      url: "#",
-      items: [
-        {
-          title: "Help Center",
-          description: "Get all the answers you need right here",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Contact Us",
-          description: "We are here to help you with any questions you have",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Status",
-          description: "Check the current status of our services and APIs",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Terms of Service",
-          description: "Our terms and conditions for using our services",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Pricing",
-      url: "#",
-    },
-    {
-      title: "Blog",
-      url: "#",
-    },
-  ],
+    ],
   auth = {
     login: { title: "Login", url: "#" },
-    signup: { title: "Sign up", url: "#" },
   },
 }: Navbar1Props) => {
   return (
@@ -164,9 +89,9 @@ export const Navbar1 = ({
             <Button asChild variant="outline" size="sm">
               <a href={auth.login.url}>{auth.login.title}</a>
             </Button>
-            <Button asChild size="sm">
+            {/* <Button asChild size="sm">
               <a href={auth.signup.url}>{auth.signup.title}</a>
-            </Button>
+            </Button> */}
           </div>
         </nav>
 
@@ -212,9 +137,9 @@ export const Navbar1 = ({
                     <Button asChild variant="outline">
                       <a href={auth.login.url}>{auth.login.title}</a>
                     </Button>
-                    <Button asChild>
+                    {/* <Button asChild>
                       <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </SheetContent>
