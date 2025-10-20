@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Users, X, Check, ArrowLeft, Trophy, Calendar, Clock } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Users, X, Check, ArrowLeft, Calendar, Clock } from "lucide-react"
 
 interface TeamMember {
   id: string
@@ -267,16 +267,66 @@ function Avatar({ name }: { name: string }) {
   )
 }
 
+function UserProfileAvatar({ user }: { user: any }) {
+  if (user?.image?.link) {
+    return (
+      <img
+        src={user.image.link}
+        alt={user.login}
+        className="w-12 h-12 rounded-full border-2 border-emerald-400"
+      />
+    )
+  }
+  return <Avatar name={user?.login || "User"} />
+}
+
 export default function SportsCategoriesPage() {
   const [selectedSport, setSelectedSport] = useState<string | null>(null)
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
   const [joinedTeams, setJoinedTeams] = useState<string[]>([])
+  const [user, setUser] = useState<any>(null)
+  const [teams, setTeams] = useState<Team[]>(allTeams)
 
-  const sportTeams = selectedSport ? allTeams.filter((team) => team.sport === selectedSport) : []
+  useEffect(() => {
+    // Get user from localStorage
+    const userData = localStorage.getItem('42_user')
+    if (userData) {
+      setUser(JSON.parse(userData))
+    }
+  }, [])
+
+  const sportTeams = selectedSport ? teams.filter((team) => team.sport === selectedSport) : []
 
   const handleJoinTeam = (teamId: string) => {
     if (!joinedTeams.includes(teamId)) {
       setJoinedTeams([...joinedTeams, teamId])
+      
+      // Add user to team members
+      setTeams(teams.map(team => {
+        if (team.id === teamId && user) {
+          return {
+            ...team,
+            members: [...team.members, {
+              id: user.id,
+              name: user.login,
+              avatar: user.image?.link || ""
+            }]
+          }
+        }
+        return team
+      }))
+      
+      // Update selectedTeam if it's the current one
+      if (selectedTeam?.id === teamId && user) {
+        setSelectedTeam({
+          ...selectedTeam,
+          members: [...selectedTeam.members, {
+            id: user.id,
+            name: user.login,
+            avatar: user.image?.link || ""
+          }]
+        })
+      }
     }
   }
 
@@ -295,7 +345,7 @@ export default function SportsCategoriesPage() {
               </h1>
               <p className="text-sm text-gray-400 mt-1">Find and join your favorite teams</p>
             </div>
-            <Trophy className="text-emerald-400" size={32} />
+            <UserProfileAvatar user={user} />
           </div>
         </div>
       </div>
@@ -461,18 +511,42 @@ export default function SportsCategoriesPage() {
                 <h3 className="text-lg font-semibold text-emerald-400 mb-4">Team Members</h3>
                 <div className="flex flex-wrap gap-4">
                   {selectedTeam.members.map((member) => (
-                    <div key={member.id} className="flex flex-col items-center gap-2">
-                      <Avatar name={member.name} />
-                      <p className="text-gray-300 text-sm font-medium">{member.name}</p>
-                    </div>
+                    <a
+                      key={member.id}
+                      href={`https://profile.intra.42.fr/users/${member.name.toLowerCase()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-2 group cursor-pointer"
+                    >
+                      <div className="group-hover:scale-110 transition">
+                        <Avatar name={member.name} />
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium group-hover:text-emerald-400 transition">
+                        {member.name}
+                      </p>
+                    </a>
                   ))}
-                  {hasSpot(selectedTeam) && (
+                  {hasSpot(selectedTeam) && !isUserJoined(selectedTeam.id) && (
                     <button
                       onClick={() => handleJoinTeam(selectedTeam.id)}
                       className="w-12 h-12 flex items-center justify-center bg-emerald-500/20 border-2 border-emerald-500 rounded-full hover:bg-emerald-500/40 transition text-xl font-bold text-emerald-400 hover:scale-110"
                     >
                       +
                     </button>
+                  )}
+                  {isUserJoined(selectedTeam.id) && (
+                    <div className="flex flex-col items-center gap-2">
+                      {user?.image?.link ? (
+                        <img
+                          src={user.image.link}
+                          alt={user.login}
+                          className="w-12 h-12 rounded-full border-2 border-emerald-400 object-cover"
+                        />
+                      ) : (
+                        <Avatar name={user?.login || "You"} />
+                      )}
+                      <p className="text-gray-300 text-sm font-medium">{user?.login || "You"}</p>
+                    </div>
                   )}
                 </div>
               </div>

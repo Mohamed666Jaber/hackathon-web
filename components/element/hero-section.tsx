@@ -31,7 +31,7 @@ const HeroSection = ({
   buttons = {
     primary: {
       text: "Login with 42 Intra",
-      url: "https://www.shadcnblocks.com",
+      url: "#", // We'll handle this with the login URL
     }
   },
   image = {
@@ -39,6 +39,11 @@ const HeroSection = ({
     alt: "Hero section demo image showing interface components",
   },
 }: Hero1Props) => {
+  // Generate the 42 login URL
+  const clientId = process.env.NEXT_PUBLIC_42_CLIENT_ID;
+  const redirectUri = process.env.NEXT_PUBLIC_42_REDIRECT_URI;
+  const loginUrl = `https://api.intra.42.fr/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=public`;
+
   return (
     <>
       <section className="py-32 bg-gradient-to-b from-black via-black to-slate-950">
@@ -60,7 +65,7 @@ const HeroSection = ({
               <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
                 {buttons.primary && (
                   <Button asChild className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600">
-                    <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                    <a href={loginUrl}>{buttons.primary.text}</a>
                   </Button>
                 )}
                 {buttons.secondary && (
